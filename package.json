@@ -1,0 +1,51 @@
+{
+    "name": "renumber-selection",
+    "displayName": "Renumber Selection",
+    "description": "Renumbers the lines in the selected text",
+    "icon": "renumber.png",
+    "version": "0.0.1",
+    "publisher": "Gruntfuggly",
+    "repository": "https://github.com/Gruntfuggly/renumber",
+    "engines": {
+        "vscode": "^1.5.0"
+    },
+    "categories": [
+        "Other"
+    ],
+    "activationEvents": [
+        "*"
+    ],
+    "main": "./extension",
+    "contributes": {
+        "commands": [
+            {
+                "command": "renumberSelection",
+                "title": "Renumber Selection"
+            }
+        ],
+        "configuration": {
+            "type": "object",
+            "title": "renumber-selection configuration",
+            "properties": {
+                "renumber-selection.regex": {
+                    "type": "string",
+                    "description": "Regular expression for matching numbers",
+                    "default": "^\\d+(\\.\\d+)?"
+                },
+                "renumber-selection.startValue": {
+                    "type": "number",
+                    "description": "Starting value for the sequence",
+                    "default": 1
+                },
+                "renumber-selection.increment": {
+                    "type": "number",
+                    "description": "Increment for the sequence",
+                    "default": 1
+                }
+            }
+        }
+    },
+    "devDependencies": {
+        "vscode": "^1.0.0"
+    }
+}
