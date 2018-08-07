@@ -3,7 +3,7 @@
     "displayName": "Renumber Selection",
     "description": "Renumbers the lines in the selected text",
     "icon": "renumber.png",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "publisher": "Gruntfuggly",
     "repository": "https://github.com/Gruntfuggly/renumber",
     "engines": {
@@ -30,7 +30,7 @@
                 "renumber-selection.regex": {
                     "type": "string",
                     "description": "Regular expression for matching numbers",
-                    "default": "^\\d+(\\.\\d+)?"
+                    "default": "^(.*?)(\\d+)(\\.\\d+)?"
                 },
                 "renumber-selection.startValue": {
                     "type": "number",

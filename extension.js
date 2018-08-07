@@ -2,6 +2,19 @@ var vscode = require( 'vscode' );
 
 function activate( context )
 {
+    function zeroPad( num, numZeros )
+    {
+        var n = Math.abs( num );
+        var zeros = Math.max( 0, numZeros - Math.floor( n ).toString().length );
+        var zeroString = Math.pow( 10, zeros ).toString().substr( 1 );
+        if( num < 0 )
+        {
+            zeroString = '-' + zeroString;
+        }
+
+        return zeroString + n;
+    }
+
     var disposable = vscode.commands.registerCommand( 'renumberSelection', function()
     {
         var editor = vscode.window.activeTextEditor;
@@ -22,11 +35,11 @@ function activate( context )
             var text = document.getText();
             var lines = text.substring( document.offsetAt( selection.start ), document.offsetAt( selection.end ) );
 
-            lines = lines.replace( numberPattern, function( match, g1, g2 )
+            lines = lines.replace( numberPattern, function( match, g1, g2, g3 )
             {
                 var current = counter;
                 counter += config.increment;
-                return current;
+                return g1 + zeroPad( current, g2.length ) + ( g3 ? g3 : "" );
             } );
 
             var edits = [];
