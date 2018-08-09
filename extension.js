@@ -2,6 +2,8 @@ var vscode = require( 'vscode' );
 
 function activate( context )
 {
+    var decoration;
+
     function zeroPad( num, numZeros )
     {
         var n = Math.abs( num );
@@ -25,28 +27,59 @@ function activate( context )
 
         var hasSelection = s.line !== e.line || s.character !== e.character;
 
+        var config = vscode.workspace.getConfiguration( 'renumber-selection' );
+        var counter = config.startValue;
+        var document = editor.document;
+        var numberPattern = new RegExp( config.regex, 'gm' );
+
+        var lines = document.getText();
+        var range = new vscode.Range( 0,
+            document.lineAt( 0 ).range.start.character,
+            document.lineCount - 1,
+            document.lineAt( document.lineCount - 1 ).range.end.character );
+
+        var selectionOffset = 0;
+
         if( hasSelection )
         {
-            var config = vscode.workspace.getConfiguration( 'renumber-selection' );
-            var counter = config.startValue;
-            var document = editor.document;
-            var numberPattern = new RegExp( config.regex, 'gm' );
+            selectionOffset = document.offsetAt( selection.start );
+            lines = lines.substring( selectionOffset, document.offsetAt( selection.end ) );
+            range = selection;
+        }
 
-            var text = document.getText();
-            var lines = text.substring( document.offsetAt( selection.start ), document.offsetAt( selection.end ) );
+        var highlights = [];
 
-            lines = lines.replace( numberPattern, function( match, g1, g2, g3 )
+        lines = lines.replace( numberPattern, function( match, g1, g2, g3 )
+        {
+            var offset = arguments[ arguments.length - 2 ];
+            var current = counter;
+            counter += config.increment;
+            const startPos = editor.document.positionAt( offset + selectionOffset + g1.length );
+            const endPos = editor.document.positionAt( offset + selectionOffset + g1.length + g2.length );
+            const highlight = { range: new vscode.Range( startPos, endPos ) };
+            highlights.push( highlight );
+            return g1 + zeroPad( current, g2.length ) + ( g3 ? g3 : "" );
+        } );
+
+        var edits = [];
+        edits.push( new vscode.TextEdit( range, lines ) );
+        var edit = new vscode.WorkspaceEdit();
+        edit.set( editor.document.uri, edits );
+        vscode.workspace.applyEdit( edit );
+
+        if( vscode.workspace.getConfiguration( 'renumber-selection' ).get( 'highlightChanges', true ) )
+        {
+            if( decoration )
             {
-                var current = counter;
-                counter += config.increment;
-                return g1 + zeroPad( current, g2.length ) + ( g3 ? g3 : "" );
+                decoration.dispose();
+            }
+            
+            decoration = vscode.window.createTextEditorDecorationType( {
+                light: { outline: vscode.workspace.getConfiguration( 'renumber-selection' ).get( 'highlightLight' ) },
+                dark: { outline: vscode.workspace.getConfiguration( 'renumber-selection' ).get( 'highlightDark' ) },
             } );
 
-            var edits = [];
-            edits.push( new vscode.TextEdit( selection, lines ) );
-            var edit = new vscode.WorkspaceEdit();
-            edit.set( editor.document.uri, edits );
-            vscode.workspace.applyEdit( edit );
+            editor.setDecorations( decoration, highlights );
         }
     } );
 

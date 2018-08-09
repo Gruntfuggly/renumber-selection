@@ -3,7 +3,7 @@
     "displayName": "Renumber Selection",
     "description": "Renumbers the lines in the selected text",
     "icon": "renumber.png",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "publisher": "Gruntfuggly",
     "repository": "https://github.com/Gruntfuggly/renumber",
     "engines": {
@@ -41,6 +41,21 @@
                     "type": "number",
                     "description": "Increment for the sequence",
                     "default": 1
+                },
+                "renumber-selection.highlightChanges": {
+                    "type": "boolean",
+                    "description": "Set this to false to disable highlighting the replaced numbers",
+                    "default": true
+                },
+                "renumber-selection.highlightDark": {
+                    "type": "string",
+                    "description": "A css outline style for highlighting the replaced numbers when using a dark theme",
+                    "default": "1px dotted magenta"
+                },
+                "renumber-selection.highlightLight": {
+                    "type": "string",
+                    "description": "A css outline style for highlighting the replaced numbers when using a light theme",
+                    "default": "1px dotted magenta"
                 }
             }
         }

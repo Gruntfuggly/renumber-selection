@@ -22,6 +22,20 @@ Examples:
 
 *Note: The regex must contain at least two capture groups. The first should match everything before the 'number' and the second should match the 'number' itself, or watch you want to replace with the incrementing counter. The default regex preserves decimal parts of the number.*
 
+`renumber-selection.highlightChanges` can be set to `false` to disable highlighting the replaced numbers
+
+`renumber-selection.highlightDark` can be used to change the highlight (for dark themes)
+
+`renumber-selection.highlightLight` can be used to change the highlight (for light themes)
+
+*Note: The highlight uses CSS outlines. So valid values should include a style (e.g. dashed, dotted, etc. ), a width (e.g. 1px) and a colour. E.g. "solid 2px red"*
+
+### Ignoring comments
+
+If you have commented lines which would normally match the regex, you can ignoring them by modifying the regex to include the comment character. For example, to ignore commented lines in markdown, change the regex to:
+`"^([^#]*?)(\\d+)(\\.\\d+)?"`
+
+
 ## Installing
 
 You can install the latest version of the extension via the Visual Studio Marketplace [here](https://marketplace.visualstudio.com/items?itemName=Gruntfuggly.renumber-selection).
