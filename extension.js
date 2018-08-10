@@ -73,10 +73,19 @@ function activate( context )
             {
                 decoration.dispose();
             }
-            
+
+            var lanes = {
+                "center": 2,
+                "full": 7,
+                "left": 1,
+                "right": 4
+            };
+
             decoration = vscode.window.createTextEditorDecorationType( {
                 light: { outline: vscode.workspace.getConfiguration( 'renumber-selection' ).get( 'highlightLight' ) },
                 dark: { outline: vscode.workspace.getConfiguration( 'renumber-selection' ).get( 'highlightDark' ) },
+                overviewRulerColor: vscode.workspace.getConfiguration( 'renumber-selection' ).get( 'highlightRulerColour' ),
+                overviewRulerLane: lanes[ vscode.workspace.getConfiguration( 'renumber-selection' ).get( 'highlightRulerLane' ) ],
             } );
 
             editor.setDecorations( decoration, highlights );

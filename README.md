@@ -28,6 +28,10 @@ Examples:
 
 `renumber-selection.highlightLight` can be used to change the highlight (for light themes)
 
+`renumber-selection.highlightRulerColour` can be used to change the colour of the ruler indications
+
+`renumber-selection.highlightRulerLane` can be used to change the ruler lane
+
 *Note: The highlight uses CSS outlines. So valid values should include a style (e.g. dashed, dotted, etc. ), a width (e.g. 1px) and a colour. E.g. "solid 2px red"*
 
 ### Ignoring comments

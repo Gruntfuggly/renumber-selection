@@ -1,3 +1,6 @@
+# v0.0.4 - 2018-08-10
+- Show highlights in ruler
+
 # v0.0.3 - 2018-08-09
 - Add note about ignoring commented lines in README.md
 - Use the whole document if nothing is selected
