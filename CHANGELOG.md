@@ -1,6 +1,7 @@
 # Renumber Selection Change Log
 
 - Fix markdown lint errors in README.md and CHANGELOG.md
+- Fix link to repository in package.json
 
 ## v0.0.4 - 2018-08-10
 
